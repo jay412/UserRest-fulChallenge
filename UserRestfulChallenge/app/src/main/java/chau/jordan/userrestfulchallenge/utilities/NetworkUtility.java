@@ -61,7 +61,11 @@ public class NetworkUtility {
 
     public static void postHttpUrlResponse(URL url, String data) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setReadTimeout(10000);
+        urlConnection.setConnectTimeout(15000);
         urlConnection.setRequestMethod("POST");
+        urlConnection.setDoOutput(true);
+        urlConnection.setDoInput(true);
 
         try {
             //Write
@@ -69,6 +73,7 @@ public class NetworkUtility {
 
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
             writer.write(data);
+            writer.flush();
             writer.close();
 
             os.close();

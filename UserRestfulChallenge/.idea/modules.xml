@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/UserRestfulChallenge.iml" filepath="$PROJECT_DIR$/UserRestfulChallenge.iml" />
+      <module fileurl="file://C:\Users\jchau3\Documents\UserRest-fulChallenge\UserRestfulChallenge\UserRestfulChallenge.iml" filepath="C:\Users\jchau3\Documents\UserRest-fulChallenge\UserRestfulChallenge\UserRestfulChallenge.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\jchau3\Documents\UserRest-fulChallenge\UserRestfulChallenge\app\app.iml" filepath="C:\Users\jchau3\Documents\UserRest-fulChallenge\UserRestfulChallenge\app\app.iml" />
     </modules>
   </component>
 </project>
