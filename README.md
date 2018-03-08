@@ -24,7 +24,11 @@ New User Page:
 3) The ability to create a new user is made in another page rather than the home page to account for long lists of users taking up too much space on the screen.
 
 # Screenshots
+This is the default home page.
 ![Alt text](/default-home-page.png?raw=true "Default Home Page")
+This is the new home page after inputting a different candidate parameter.
 ![Alt text](/new-home-page.png?raw=true "New Home Page")
+This is the create new user page with text fields filled in with input values.
 ![Alt text](/create-new-user.png?raw=true "Create New User")
+This is the new user that was created and retrieved when the home page was refreshed.
 ![Alt text](/show-new-user.png?raw=true "Show New User")
