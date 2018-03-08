@@ -22,3 +22,9 @@ New User Page:
 2) The challenge does not request for any functionality regarding Users making Transfers which will manipulate their balance
   - It also does not request for any delete functionality regarding Users
 3) The ability to create a new user is made in another page rather than the home page to account for long lists of users taking up too much space on the screen.
+
+# Screenshots
+![Alt text](relative/path/to/default-home-page.png?raw=true "Default Home Page")
+![Alt text](relative/path/to/new-home-page.png?raw=true "New Home Page")
+![Alt text](relative/path/to/create-new-user.png?raw=true "Create New User")
+![Alt text](relative/path/to/show-new-user.png?raw=true "Show New User")
