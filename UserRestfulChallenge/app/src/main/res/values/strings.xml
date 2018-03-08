@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">UserRestfulChallenge</string>
-    <string name="error_message">An error has occurred. Please try again by clicking REFRESH</string>
+    <string name="error_message">An error has occurred.\nPlease try again by clicking REFRESH and making sure that Wi-Fi is turned on.</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_add">Add</string>
     <string name="name">Name:</string>
@@ -8,4 +8,5 @@
     <string name="candidate">Candidate:</string>
     <string name="create_user">Create New User</string>
     <string name="default_candidate">c2366</string>
+    <string name="candidate_prompt">Enter a Candidate Parameter and Tap REFRESH for a different user list:</string>
 </resources>

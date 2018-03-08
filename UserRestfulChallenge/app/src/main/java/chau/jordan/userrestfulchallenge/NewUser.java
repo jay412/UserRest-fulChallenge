@@ -1,7 +1,6 @@
 package chau.jordan.userrestfulchallenge;
 
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,22 +15,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Iterator;
-
-import javax.net.ssl.HttpsURLConnection;
-
 import chau.jordan.userrestfulchallenge.utilities.NetworkUtility;
 
+/**
+ * <h1>New User</h1>
+ * This activity takes in user input from the text fields to create a new user
+ * and calls the API to POST the new user based on its candidate parameter
+ *
+ * @author Jordan Chau
+ * @since 2018-03-07
+ */
 public class NewUser extends AppCompatActivity {
     private EditText mName, mEmail, mCandidate;
     private Button mCreate;
@@ -44,6 +37,7 @@ public class NewUser extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Create a New User"); */
 
+        //Creates the back arrow on the top left corner to return to MainActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -56,12 +50,15 @@ public class NewUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkFields())
-                    new PostOperation().execute(mCandidate.getText().toString());
+                    new PostOperation().execute("");
             }
         });
     }
 
-    //checks fields to see if user provided input
+    /**
+     * This method returns True or False depending if there are empty fields that the user needs to fill
+     * @return boolean - This returns True or False depending on conditions fulfilled
+     */
     private boolean checkFields() {
         if (TextUtils.isEmpty(mName.getText().toString())) {
             Toast.makeText(NewUser.this, "Please provide a name.", Toast.LENGTH_LONG).show();
@@ -77,6 +74,11 @@ public class NewUser extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * <h1>Post Operation</h1>
+     * <p> This is an AsyncTask class to perform a POST operation in the background
+     * Takes in a String parameter to create a user with a specified candidate parameter
+     */
     private class PostOperation extends AsyncTask<String, Void, Void> {
 
         ProgressDialog progressDialog = new ProgressDialog(NewUser.this);
@@ -96,80 +98,15 @@ public class NewUser extends AppCompatActivity {
             }
 
             /*String user = params[0];
-            URL userRequestUrl = NetworkUtility.buildURL(user);
+            URL userRequestUrl = NetworkUtility.buildURL(user); */
 
             try {
-                /*Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("name", mName.getText().toString())
-                        .appendQueryParameter("email", mEmail.getText().toString())
-                        .appendQueryParameter("candidate", mCandidate.getText().toString());
-                String query = builder.build().getEncodedQuery();
-                JSONObject postDataParmas = createUserJSONObject();
-
-                NetworkUtility.postHttpUrlResponse(userRequestUrl, getPostDataString(postDataParmas));
-                Log.d("NewUser.java", "POST HTTP URL RESPONSE: " + getPostDataString(postDataParmas));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } */
-            try {
-            /*URL url = new URL("http://fake-button.herokuapp.com/user"); // here is your URL path
-
-            JSONObject postDataParams = createUserJSONObject();
-            Log.e("params",postDataParams.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds );
-            conn.setConnectTimeout(15000 /* milliseconds );
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            //writer.write(getPostDataString(postDataParams));
-                //writer.write();
-
-                Log.e("POST DATA STRING: ", getPostDataString(postDataParams));
-
-            writer.flush();
-            writer.close();
-            os.close();
-
-            int responseCode=conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                BufferedReader in=new BufferedReader(new
-                        InputStreamReader(
-                        conn.getInputStream()));
-
-                StringBuffer sb = new StringBuffer("");
-                String line="";
-
-                while((line = in.readLine()) != null) {
-
-                    sb.append(line);
-                    break;
-                }
-
-                in.close();
-                //return sb.toString();
+                String cReq = NetworkUtility.curl(createUserJSONObject().toString());
+                Log.v("NewUSER CURL: ", cReq);
             }
-            else {
-                //return new String("false : "+responseCode);
-                Log.d("NewUser RC: " , new String("false : "+responseCode));
-            } */
-
-                String c = curl(createUserJSONObject().toString(), "http://fake-button.herokuapp.com/user");
-                Log.e("NewUSER CURL: ", c);
-        }
             catch(Exception e){
-                Log.d("NewUser EXCEPTION: " , e.getMessage());
-            //return new String("Exception: " + e.getMessage());
-        }
+                Log.v("NewUser EXCEPTION: " , e.getMessage());
+            }
 
             return null;
         }
@@ -181,48 +118,10 @@ public class NewUser extends AppCompatActivity {
         }
     }
 
-    /*private void createNewUser(){
-
-
-        HttpURLConnection httpcon;
-        String result;
-        try {
-            //Connect
-            httpcon = (HttpURLConnection) NetworkUtility.buildURL(mCandidate.getText().toString()).openConnection();
-            httpcon.setDoOutput(true);
-            httpcon.setRequestProperty("Content-Type", "application/json");
-            httpcon.setRequestProperty("Accept", "application/json");
-            httpcon.setRequestMethod("POST");
-            httpcon.connect();
-
-            //Write
-            OutputStream os = httpcon.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(createUserJSONString());
-            writer.close();
-            os.close();
-
-            //Read
-            BufferedReader br = new BufferedReader(new InputStreamReader(httpcon.getInputStream(),"UTF-8"));
-
-            String line;
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            br.close();
-            result = sb.toString();
-            Log.d("NewUser.java", "Read Result: " + result);
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
+    /**
+     * This method returns a JSONObject that is created based on user input
+     * @return JSONObject - Returns a JSONObject with specified key-value pairs
+     */
     private JSONObject createUserJSONObject() {
         JSONObject object = new JSONObject();
         try {
@@ -238,54 +137,11 @@ public class NewUser extends AppCompatActivity {
         return object;
     }
 
-    public String getPostDataString(JSONObject params) throws Exception {
-
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-
-        Iterator<String> itr = params.keys();
-
-        while(itr.hasNext()){
-
-            String key= itr.next();
-            Object value = params.get(key);
-
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(key, "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-
-        }
-        return result.toString();
-    }
-
-    private static String curl(String minusD, String url) throws Exception {
-        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-        con.setDoOutput(true);
-        con.setRequestProperty("Content-Type",  "application/x-www-form-urlencoded");
-        con.getOutputStream().write(minusD.getBytes());
-        con.getOutputStream().close();
-
-        ByteArrayOutputStream rspBuff = new ByteArrayOutputStream();
-        InputStream rspStream = con.getInputStream();
-
-        int c;
-        while ((c = rspStream.read()) > 0) {
-            rspBuff.write(c);
-        }
-        rspStream.close();
-
-        return new String(rspBuff.toByteArray());
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        // handles back arrow presses
         if(id == android.R.id.home) {
             finish();
         }

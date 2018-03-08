@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="chau.jordan.userrestfulchallenge.NewUser"
     android:orientation="vertical">
 
@@ -25,7 +24,7 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:text="@string/name" />
 
@@ -34,14 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:text="@string/email" />
 
@@ -50,14 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/tv_candidate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:text="@string/candidate" />
 
@@ -66,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:inputType="text"
         android:text="@string/default_candidate"/>
 
@@ -75,6 +74,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="@string/create_user" />
 </LinearLayout>

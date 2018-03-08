@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_candidate_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/candidate_prompt"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/et_candidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:text="@string/default_candidate" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,14 +42,6 @@
         android:padding="16dp"
         android:text="@string/error_message"
         android:textSize="20sp"
-        android:visibility="invisible" />
-
-    <!-- <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        /> -->
-
-</FrameLayout>
+        android:visibility="invisible"
+        android:textAlignment="center"/>
+</LinearLayout>

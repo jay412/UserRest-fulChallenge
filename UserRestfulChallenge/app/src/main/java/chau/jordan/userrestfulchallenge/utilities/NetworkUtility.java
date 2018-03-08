@@ -3,21 +3,23 @@ package chau.jordan.userrestfulchallenge.utilities;
 import android.net.Uri;
 import android.util.Log;
 
-import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URL;
-
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 
 /**
- * Created by Jordan on 3/6/2018.
+ * <h1>Network Utility</h1>
+ * This class handles all necessary HTTP Connections in order to retrieve user information from the API
+ * Or send new user information to it
+ * It also provides helper methods to build the URL
+ *
+ * @author Jordan Chau
+ * @since 2018-03-07
  */
-
 public class NetworkUtility {
 
     private static final String TAG = NetworkUtility.class.getSimpleName();
@@ -25,6 +27,12 @@ public class NetworkUtility {
 
     final static String CAN_PARAM = "candidate";
 
+    /**
+     * This method builds a URL with the specified candidate parameter
+     * and returns the URL
+     * @param candidateQuery - String parameter that specifies candidate parameter
+     * @return URL - Returns a URL with the specified candidate parameter
+     */
     public static URL buildURL(String candidateQuery) {
         Uri uri = Uri.parse(URL).buildUpon().appendQueryParameter(CAN_PARAM, candidateQuery).build();
 
@@ -40,6 +48,12 @@ public class NetworkUtility {
         return builtURL;
     }
 
+    /**
+     * This method creates a GET request with the specified url, sends it through a HTTP URL Connection
+     * and returns a String that represents a response containing information about all users
+     * @param url - Url parameter to create the request with
+     * @return String - Returns a String that represents all user info
+     */
     public static String getHttpUrlResponse(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
@@ -59,26 +73,28 @@ public class NetworkUtility {
         }
     }
 
-    public static void postHttpUrlResponse(URL url, String data) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setReadTimeout(10000);
-        urlConnection.setConnectTimeout(15000);
-        urlConnection.setRequestMethod("POST");
-        urlConnection.setDoOutput(true);
-        urlConnection.setDoInput(true);
+    /**
+     * This method creates a curl POST request with the specified data, sends it through a HTTP URL Connection
+     * and returns a String that represents the curl request
+     * @param data - Data parameter that includes a user's name, email, and candidate ID
+     * @return String - Returns a String that represents the curl request
+     */
+    public static String curl(String data) throws Exception {
+        HttpURLConnection con = (HttpURLConnection) new URL(URL).openConnection();
+        con.setDoOutput(true);
+        con.setRequestProperty("Content-Type",  "application/x-www-form-urlencoded");
+        con.getOutputStream().write(data.getBytes());
+        con.getOutputStream().close();
 
-        try {
-            //Write
-            OutputStream os = urlConnection.getOutputStream();
+        ByteArrayOutputStream rspBuff = new ByteArrayOutputStream();
+        InputStream rspStream = con.getInputStream();
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(data);
-            writer.flush();
-            writer.close();
-
-            os.close();
-        } finally {
-            urlConnection.disconnect();
+        int c;
+        while ((c = rspStream.read()) > 0) {
+            rspBuff.write(c);
         }
+        rspStream.close();
+
+        return new String(rspBuff.toByteArray());
     }
 }
